@@ -50,7 +50,7 @@ pipeline {
                 def scannerHome = tool 'SONAR-4.8.2856';
                     withSonarQubeEnv("sonar-vprofile") {
                     sh "${tool("SONAR-4.8.2856")}/bin/sonar-scanner \
-                    -Dsonar.projectKey=TodoappNodejs \
+                    -Dsonar.projectKey=pagelogin \
                     -Dsonar.sources=. \
                     -Dsonar.css.node=. \
                     -Dsonar.host.url=http://192.168.254.128:9000 \
