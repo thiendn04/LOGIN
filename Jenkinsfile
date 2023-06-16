@@ -15,7 +15,7 @@ pipeline {
         NEXUS_CREDENTIAL_ID = "NexusserverLogin"
         ARTVERSION = "${env.BUILD_ID}"
         NEXUS_USER = "admin"
-        ARTIFACT_NAME = "weblab"
+        ARTIFACT_NAME = "login"
 		HYPHEN = "-"
 		VERSION = "1.0.0"
 		ARTIFACT_EXTENSION = "tgz"
@@ -25,7 +25,7 @@ pipeline {
         stage("Fetch Repository") {
             steps {
                 echo 'Get code from a GitHub repository'
-                git url: 'https://github.com/thiendn04/weblab.git', branch: 'main', credentialsId: 'jenkins-test'
+                git url: 'https://github.com/thiendn04/login.git', branch: 'main', credentialsId: 'jenkins-test'
                 echo 'Fetch Repository Completed !'
             }           
             post {
@@ -115,7 +115,7 @@ pipeline {
                     """					
 					
                     ansiblePlaybook(
-						credentialsId: 'weblab-staging-ssh-login',
+						credentialsId: 'login-staging-ssh-login',
 						disableHostKeyChecking: true,
                         colorized: true,
                         inventory: 'inventories/staging/hosts',
@@ -127,7 +127,7 @@ pipeline {
                             reponame: "${NEXUS_REPOSITORY}",
                             artifactname: "${ARTIFACT_NAME}",
 							hyphen: "$HYPHEN",
-                            weblab_version: "${ARTIFACT_NAME}-${VERSION}-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.${ARTIFACT_EXTENSION}"
+                            login_version: "${ARTIFACT_NAME}-${VERSION}-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.${ARTIFACT_EXTENSION}"
                         ],						
                     )
 		        }
