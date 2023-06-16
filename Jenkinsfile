@@ -120,15 +120,15 @@ pipeline {
                         colorized: true,
                         inventory: 'inventories/staging/hosts',
                         playbook: 'ansible/site.yml',
-                        extraVars: [
-                            USER: "${NEXUS_USER}",
-                            PASS: "${NEXUS_CREDENTIAL_ID}",
-                            nexusip: "${NEXUS_IP}",
-                            reponame: "${NEXUS_REPOSITORY}",
-                            artifactname: "${ARTIFACT_NAME}",
-							hyphen: "$HYPHEN",
-                            login_version: "${ARTIFACT_NAME}-${VERSION}-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.${ARTIFACT_EXTENSION}"
-                        ],						
+                        // extraVars: [
+                        //     USER: "${NEXUS_USER}",
+                        //     PASS: "${NEXUS_CREDENTIAL_ID}",
+                        //     nexusip: "${NEXUS_IP}",
+                        //     reponame: "${NEXUS_REPOSITORY}",
+                        //     artifactname: "${ARTIFACT_NAME}",
+						// 	hyphen: "$HYPHEN",
+                        //     login_version: "${ARTIFACT_NAME}-${VERSION}-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}.${ARTIFACT_EXTENSION}"
+                        // ],						
                     )
 		        }
 		    }
