@@ -84,7 +84,7 @@ pipeline {
                     // Tạo tệp tin host và ghi nội dung trong thư mục staging
                     def stag = '''
                         web01 ansible_host=192.168.254.131
-                        db01 ansible_host=192.168.254.134
+                        db01 ansible_host=192.168.254.135
                         
                         [stagingsrvgrp]
                         web01
