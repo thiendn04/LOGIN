@@ -115,7 +115,7 @@ pipeline {
                     """					
 					
                     ansiblePlaybook(
-						credentialsId: 'login-staging-ssh-login',
+						credentialsId: 'weblab-staging-ssh-login',
 						disableHostKeyChecking: true,
                         colorized: true,
                         inventory: 'inventories/staging/hosts',
