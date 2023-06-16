@@ -22,52 +22,52 @@ pipeline {
 
     }      
     stages {
-        stage("Fetch Repository") {
-            steps {
-                echo 'Get code from a GitHub repository'
-                git url: 'https://github.com/thiendn04/login.git', branch: 'main', credentialsId: 'jenkins-test'
-                echo 'Fetch Repository Completed !'
-            }           
-            post {
-                always {
-                    echo 'Slack Notifications.'
-                    slackSend channel: '#cicd-jenkins-lab',
-                        color: '#FF0000',
-                        message: "*STARTED:* Job ${env.JOB_NAME} build #${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
-                }
-            } 
-        }
-        stage('Build') {
-            steps {
-                nodejs(nodeJSInstallationName: 'NodeJS18.16.0'){
-                sh 'npm install --force'
-                }                
-            }
-        }
-        stage('Code Quality Check via SonarQube') {
-            steps {
-                script {
-                def scannerHome = tool 'SONAR-4.8.2856';
-                    withSonarQubeEnv("sonar-vprofile") {
-                    sh "${tool("SONAR-4.8.2856")}/bin/sonar-scanner \
-                    -Dsonar.projectKey=pagelogin \
-                    -Dsonar.sources=. \
-                    -Dsonar.css.node=. \
-                    -Dsonar.host.url=http://192.168.254.128:9000 \
-                    -Dsonar.login=squ_1dfc93f7ed0dd1b8f251942e471bb6ed21ffdbec"
-               }
-            }
-            timeout(time: 10, unit: 'MINUTES') {
-               waitForQualityGate abortPipeline: true
-            }   
-			}     
-		}
-		stage('Publish to Nexus Repository Manager') {
-            steps {
-                    sh "npm version --no-git-tag-version --allow-same-version=false --prefix ./ $version-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}"
-                    sh 'npm publish'
-            }
-		}
+        // stage("Fetch Repository") {
+        //     steps {
+        //         echo 'Get code from a GitHub repository'
+        //         git url: 'https://github.com/thiendn04/login.git', branch: 'main', credentialsId: 'jenkins-test'
+        //         echo 'Fetch Repository Completed !'
+        //     }           
+        //     post {
+        //         always {
+        //             echo 'Slack Notifications.'
+        //             slackSend channel: '#cicd-jenkins-lab',
+        //                 color: '#FF0000',
+        //                 message: "*STARTED:* Job ${env.JOB_NAME} build #${env.BUILD_NUMBER} \n More info at: ${env.BUILD_URL}"            
+        //         }
+        //     } 
+        // }
+        // stage('Build') {
+        //     steps {
+        //         nodejs(nodeJSInstallationName: 'NodeJS18.16.0'){
+        //         sh 'npm install --force'
+        //         }                
+        //     }
+        // }
+        // stage('Code Quality Check via SonarQube') {
+        //     steps {
+        //         script {
+        //         def scannerHome = tool 'SONAR-4.8.2856';
+        //             withSonarQubeEnv("sonar-vprofile") {
+        //             sh "${tool("SONAR-4.8.2856")}/bin/sonar-scanner \
+        //             -Dsonar.projectKey=pagelogin \
+        //             -Dsonar.sources=. \
+        //             -Dsonar.css.node=. \
+        //             -Dsonar.host.url=http://192.168.254.128:9000 \
+        //             -Dsonar.login=squ_1dfc93f7ed0dd1b8f251942e471bb6ed21ffdbec"
+        //        }
+        //     }
+        //     timeout(time: 10, unit: 'MINUTES') {
+        //        waitForQualityGate abortPipeline: true
+        //     }   
+		// 	}     
+		// }
+		// stage('Publish to Nexus Repository Manager') {
+        //     steps {
+        //             sh "npm version --no-git-tag-version --allow-same-version=false --prefix ./ $version-${env.BUILD_ID}-${env.BUILD_TIMESTAMP}"
+        //             sh 'npm publish'
+        //     }
+		// }
 		
 		stage('Deploy to Staging-Ansible'){
 		    steps {
